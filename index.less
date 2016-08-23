@@ -137,15 +137,6 @@ strong{
   h4{
     line-height: 1;
     margin: 10px 0;
-    &:before{
-      content: '';
-      position: absolute;
-      width: 1em;
-      height: 1em;
-      border-radius:50%;
-      margin-left: -25px;
-      background: @sidebar-bg;
-    }
   }
 }
 .project{
@@ -153,8 +144,17 @@ strong{
     border-left: 2px solid @sidebar-bg;
   }
   li{
-    padding-left:1em;
+    padding-left:16px;
     margin-bottom: 2em;
+    &:before{
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius:50%;
+      margin-left: -25px;
+      background: @sidebar-bg;
+    }
   }
 }
 .project-aside{

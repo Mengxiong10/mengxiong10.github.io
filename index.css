@@ -80,9 +80,7 @@ aside {
   position: fixed;
   right: 0;
   top: 50%;
-  -webkit-transform: translate(0, -50%);
-      -ms-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
 }
 aside li {
   margin-top: 10px;
@@ -146,23 +144,24 @@ strong {
   line-height: 1;
   margin: 10px 0;
 }
-.main h4:before {
-  content: '';
-  position: absolute;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  margin-left: -25px;
-  background: #3B4752;
-}
 .project ul,
 .skill ul {
   border-left: 2px solid #3B4752;
 }
 .project li,
 .skill li {
-  padding-left: 1em;
+  padding-left: 16px;
   margin-bottom: 2em;
+}
+.project li:before,
+.skill li:before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-left: -25px;
+  background: #3B4752;
 }
 .project-aside {
   float: right;
