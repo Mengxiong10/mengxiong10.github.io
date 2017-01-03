@@ -17,26 +17,29 @@
 <body>
     <canvas id="canvas"></canvas>
     <script>
-      window.requestAnimationFrame = function() {
+      window.requestAnimFrame = function() {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(a) {
           window.setTimeout(a, 1E3 / 60)
         }
       }()
+      var rand = function(rMi, rMa){return ~~((Math.random()*(rMa-rMi+1))+rMi)}
       var canvas = document.getElementById('canvas')
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
       var width = canvas.width
       var height = canvas.height
-      var max = 100
+      var max = 100; // 离子距离
+      var partCount = width > 1000 ? 300 : 80;
       var ctx = canvas.getContext('2d')
       ctx.fillRect(20,20,100,100)
       var dots = []
-      for (var i = 0; i < 200; i++) {
+      for (var i = 0; i < partCount; i++) {
         var x = Math.random() * width
         var y = Math.random() * height
         var xa = (Math.random() * 3 - 1) / 1.5
         var ya = (Math.random() * 3 - 1) / 1.5
-        dots.push({x,y,xa,ya})
+        var color = 'hsla('+rand(0,360)+', 100%, '+ rand(50,80)+'%, '+ rand(50,100)/100 +')'
+        dots.push({x:x,y:y,xa:xa,ya:ya,color:color})
       }
       var marea = {x:null,y:null}
       canvas.addEventListener('mousemove', function (e) {
@@ -50,13 +53,15 @@
       var ndots = dots.concat(marea)
       function draw () {
         ctx.clearRect(0,0,width,height)
-        dots.forEach((dot,index) =>{
+        dots.forEach(function(dot,index){
           dot.x += dot.xa
           dot.y += dot.ya
           dot.xa *= (dot.x > width || dot.x < 0) ? -1 :1
           dot.ya *= (dot.y > height || dot.y < 0) ? -1 :1
+          // ctx.fillStyle = dot.color
+          // ctx.strokeStyle = dot.color
           ctx.fillRect(dot.x -0.5 , dot.y - 0.5,1,1)
-          for (var i = 0; i < ndots.length; i++) {
+          for (var i = index + 1; i < ndots.length; i++) {
             var ndot = ndots[i]
             if (ndot === dot || ndot.x === null || ndot.y ===null ) {continue}
             var xc = Math.abs(dot.x - ndot.x)
@@ -70,15 +75,16 @@
             }
             var ratio = (max - dis)/max
             ctx.beginPath()
-            ctx.lineWidth = ratio / 2
+            ctx.lineWidth = ratio
             ctx.moveTo(dot.x,dot.y)
             ctx.lineTo(ndot.x,ndot.y)
+
             ctx.stroke()
           }
         })
-        window.requestAnimationFrame(draw)
+        window.requestAnimFrame(draw)
       }
-      window.requestAnimationFrame(draw)
+      draw()
     </script>
 </body>
 </html>
