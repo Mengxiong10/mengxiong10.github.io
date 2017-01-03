@@ -14,6 +14,11 @@
 <body>
     <canvas id="canvas"></canvas>
     <script>
+      window.requestAnimationFrame = function() {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(a) {
+          window.setTimeout(a, 1E3 / 60)
+        }
+      }()
       var canvas = document.getElementById('canvas')
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
