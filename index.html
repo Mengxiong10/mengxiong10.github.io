@@ -12,6 +12,9 @@
       margin:0;
       overflow-y: hidden;
     }
+    #canvas{
+      background:#6cc;
+    }
   </style>
 </head>
 <body>
@@ -31,7 +34,8 @@
       var max = 100; // 离子距离
       var partCount = width > 1000 ? 300 : 80;
       var ctx = canvas.getContext('2d')
-      ctx.fillRect(20,20,100,100)
+      ctx.fillStyle = '#fff'
+      ctx.strokeStyle = '#fff'
       var dots = []
       for (var i = 0; i < partCount; i++) {
         var x = Math.random() * width
@@ -60,6 +64,7 @@
           dot.ya *= (dot.y > height || dot.y < 0) ? -1 :1
           // ctx.fillStyle = dot.color
           // ctx.strokeStyle = dot.color
+          // ctx.arc()
           ctx.fillRect(dot.x -0.5 , dot.y - 0.5,1,1)
           for (var i = index + 1; i < ndots.length; i++) {
             var ndot = ndots[i]
@@ -75,13 +80,13 @@
             }
             var ratio = (max - dis)/max
             ctx.beginPath()
-            ctx.lineWidth = ratio
+            ctx.lineWidth = ratio * 2
             ctx.moveTo(dot.x,dot.y)
             ctx.lineTo(ndot.x,ndot.y)
-
             ctx.stroke()
           }
         })
+
         window.requestAnimFrame(draw)
       }
       draw()
